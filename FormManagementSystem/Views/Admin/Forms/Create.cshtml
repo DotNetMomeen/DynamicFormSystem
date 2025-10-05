@@ -1,0 +1,43 @@
+﻿@model FormManagementSystem.Models.Form
+@{
+    ViewData["Title"] = "Create Form";
+}
+<h2>Create Form</h2>
+<div class="mb-3">
+    <label class="form-label">Form Name</label>
+    <input id="form-name" class="form-control" />
+</div>
+<div class="mb-3">
+    <button id="add-field" class="btn btn-primary">Add Field</button>
+    <button id="save-draft" class="btn btn-secondary">Form Ready (Save Draft)</button>
+    <button id="publish" class="btn btn-success">Set Deadline & Publish</button>
+</div>
+<hr />
+<div id="builder-canvas" class="overflow-auto" style="min-height:250px;border:1px dashed #ccc;padding:12px;background:#fafafa;">
+</div>
+<hr />
+<h4>Preview</h4>
+<div id="preview-area"></div>
+
+<div class="modal" tabindex="-1" id="publishModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Set Deadline</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <label>Deadline (UTC)</label>
+                <input id="deadline" type="datetime-local" class="form-control" />
+            </div>
+            <div class="modal-footer">
+                <button id="confirm-publish" class="btn btn-success">Publish</button>
+                <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="/js/form-builder.js"></script>
+}

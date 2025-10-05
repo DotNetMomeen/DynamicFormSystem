@@ -1,0 +1,23 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome to Dynamic Form System</h1>
+    <p>Manage and create dynamic forms with ease.</p>
+
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div class="mt-4">
+            <a href="/Forms" class="btn btn-primary me-2">Manage Forms</a>
+            <a href="/Submissions/Dashboard" class="btn btn-outline-primary">View Submissions</a>
+        </div>
+    }
+    else
+    {
+        <div class="mt-4">
+            <a href="/Account/Login" class="btn btn-primary me-2">Login</a>
+            <a href="/Account/Register" class="btn btn-outline-primary">Register</a>
+        </div>
+    }
+</div>

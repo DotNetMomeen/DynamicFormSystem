@@ -1,0 +1,62 @@
+﻿@model FormManagementSystem.Models.Form
+@using FormManagementSystem.Models
+@{
+    ViewData["Title"] = "Submit Form";
+}
+<h2>@Model.Name</h2>
+<form method="post" asp-action="Submit" enctype="multipart/form-data">
+    <input type="hidden" name="FormId" value="@Model.FormId" />
+    @foreach (var f in Model.Fields.OrderBy(x => x.SortOrder))
+    {
+        <div class="mb-3">
+            <label class="form-label">@f.Label @if(f.IsRequired){
+            <span class="text-danger">*</span>
+        }
+</label>
+        @switch (f.FieldType)
+        {
+            case FieldType.Text:
+            case FieldType.Email:
+            case FieldType.Phone:
+            case FieldType.Number:
+            case FieldType.Url:
+                <input name="field_@f.FormFieldId" class="form-control" @(f.IsRequired ? "required" : "") />
+                break;
+            case FieldType.Date:
+                <input type="date" name="field_@f.FormFieldId" class="form-control" @(f.IsRequired ? "required" : "") />
+                break;
+            case FieldType.Dropdown:
+                <select name="field_@f.FormFieldId" class="form-select" @(f.IsRequired ? "required" : "")>
+                    <option value="">-- select --</option>
+                    @foreach (var o in f.Options.OrderBy(x => x.SortOrder))
+                    {
+                        <option value="@o.Value">@o.DisplayText ?? o.Value</option>
+                    }
+                </select>
+                break;
+            case FieldType.MultiSelect:
+                @foreach (var o in f.Options.OrderBy(x => x.SortOrder))
+                {
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="field_@f.FormFieldId" value="@o.Value" />
+                        <label class="form-check-label">@o.DisplayText ?? o.Value</label>
+                    </div>
+                }
+                break;
+            case FieldType.File:
+            case FieldType.Image:
+            case FieldType.Audio:
+            case FieldType.Video:
+                <input type="file" name="file_@f.FormFieldId" class="form-control" @(f.IsRequired ? "required" : "") />
+                break;
+            case FieldType.Checkbox:
+                <input type="checkbox" name="field_@f.FormFieldId" value="true" class="form-check-input" />
+                break;
+            default:
+                <input name="field_@f.FormFieldId" class="form-control" />
+                break;
+        }
+    </div>
+        }
+    <button class="btn btn-success" type="submit">Submit</button>
+</form>

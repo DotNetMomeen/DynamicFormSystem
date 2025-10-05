@@ -1,0 +1,22 @@
+﻿@using FormManagementSystem.Models
+@model IEnumerable<Form>
+@{
+    ViewData["Title"] = "Dashboard";
+}
+<h2>Active Forms</h2>
+<table class="table">
+    <thead><tr><th>Form</th><th>Deadline (UTC)</th><th>Actions</th></tr></thead>
+    <tbody>
+        @foreach (var f in Model)
+        {
+            <tr>
+                <td>@f.Name</td>
+                <td>@(f.Deadline?.ToString("u") ?? "No deadline")</td>
+                <td>
+                    <a class="btn btn-sm btn-primary" asp-controller="Submissions" asp-action="Form" asp-route-id="@f.FormId">View / Submit</a>
+                    <a class="btn btn-sm btn-secondary" asp-controller="Submissions" asp-action="MySubmissions" asp-route-formId="@f.FormId">My Submissions</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

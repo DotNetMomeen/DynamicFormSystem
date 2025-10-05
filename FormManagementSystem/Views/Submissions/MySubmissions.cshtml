@@ -1,0 +1,22 @@
+﻿@model IEnumerable<FormManagementSystem.Models.FormSubmission>
+@{
+    ViewData["Title"] = "My Submissions";
+}
+<h2>My Submissions</h2>
+<table class="table">
+    <thead><tr><th>Id</th><th>Form</th><th>SubmittedAt</th><th>Actions</th></tr></thead>
+    <tbody>
+        @foreach (var s in Model)
+        {
+            <tr>
+                <td>@s.FormSubmissionId</td>
+                <td>@s.Form?.Name</td>
+                <td>@s.SubmittedAt.ToString("u")</td>
+                <td>
+                    <!-- For simplicity editing not implemented here -->
+                    <a class="btn btn-sm btn-secondary" asp-controller="Admin/Forms" asp-action="ExportExcel" asp-route-id="@s.FormId">Download Excel (Admin)</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
